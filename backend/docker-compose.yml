@@ -1,0 +1,44 @@
+version: "3.5"
+
+services:
+  mysql:
+    hostname: mysql
+    image: mysql:5.7
+    volumes:
+      - db_data:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: users
+      MYSQL_USER: licenta
+      MYSQL_PASSWORD: cea_mai_smechera_parola
+    networks:
+      - auth_network
+
+  auth:
+    hostname: auth
+    build: ./auth/
+    depends_on:
+      - mysql
+    restart: always
+    ports:
+      - "5000:5000"
+    networks:
+      - auth_network
+      - prediction_network
+  
+  
+  prediction:
+    hostname: prediction
+    build: ./prediction/
+    restart: always
+    networks:
+      - prediction_network
+
+volumes:
+  db_data: {}
+
+networks:
+  auth_network:
+  prediction_network:
+

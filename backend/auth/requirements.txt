@@ -1,0 +1,9 @@
+flask
+flask-socketio
+flask-sqlalchemy
+mysqlclient
+flask-cors
+twisted
+autobahn
+cbor2
+requests
